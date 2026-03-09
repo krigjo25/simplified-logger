@@ -1,0 +1,41 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - 'v*' # Kjører når du pusher en tag som starter med 'v', f.eks. v1.0.2
+
+jobs:
+  build-n-publish:
+    name: Build and publish Python distro to PyPI and GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      # Påkrevd for Trusted Publishing på PyPI
+      id-token: write
+      # Påkrevd for å lage Release på GitHub
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Install build tools
+      run: python -m pip install build --user
+
+    - name: Build a binary wheel and a source tarball
+      run: python -m build
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/*
+        generate_release_notes: true # Lager automatisk changelog basert på commits
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
