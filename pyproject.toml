@@ -36,7 +36,7 @@ Issues = "https://github.com/krigjo25/simplified-logger/issues"
 
 [tool.setuptools]
 package-dir = {"" = "lib"}
-packages = ["std_log"]
+py-modules = ["std_log"]
 
 [tool.black]
 line-length = 120
