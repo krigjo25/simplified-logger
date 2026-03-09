@@ -69,6 +69,22 @@ logger = Logger(name="application.log", dir="my-logs")
 logger.file_handler()
 ```
 
+### Recommended Pattern
+```python
+
+from std_log import Logger
+
+class AppWatcher(Logger):
+    def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
+        super().__init__(dir = dir or 'logs', name=f"{self.__class__.__name__} -- {name}.log")
+
+logger = AppWatcher(name="service.log", dir="logs")
+logger.console_handler()
+logger.file_handler()
+
+logger.info("Service started")
+```
+
 ## API Reference
 
 ### Logger Class
@@ -121,9 +137,15 @@ Example output:
 ## Project Structure
 ```
 simplified-logger/
+├── .git/
+├── .github/
+├── .vscode/
+├── LICENCE
 ├── README.md
-└── lib/
-    └── std_log.py
+├── pyproject.toml
+└── std_log/
+    ├── __init__.py
+    └── standard-logger.py
 ```
 
 ## License
