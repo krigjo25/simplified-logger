@@ -21,7 +21,7 @@ Or simply download the file and place it in your project directory.
 
 ### Basic Example
 ```python
-from standard_logger import Logger
+from std_log import Logger
 
 # Initialize the logger
 logger = Logger(name="app.log", dir="logs")
@@ -42,7 +42,7 @@ logger.critical("Critical system failure")
 
 ### Console-Only Logging
 ```python
-from lib.standard_logging import Logger
+from std_log import Logger
 
 logger = Logger(name="console.log", dir="logs")
 logger.console_handler()
@@ -52,7 +52,7 @@ logger.info("This will only appear in the console")
 
 ### File-Only Logging
 ```python
-from lib.standard_logger import Logger
+from std_log import Logger
 
 logger = Logger(name="app.log", dir="logs")
 logger.file_handler()
@@ -62,7 +62,7 @@ logger.info("This will only be written to .logs/app.log")
 
 ### Custom Log Directory
 ```python
-from lib.standard_logger import Logger
+from std_log import Logger
 
 # Logs will be stored in .my-logs/application.log
 logger = Logger(name="application.log", dir="my-logs")
@@ -123,7 +123,7 @@ Example output:
 simplified-logger/
 ├── README.md
 └── lib/
-    └── standard-logger.py
+    └── std_log.py
 ```
 
 ## License
