@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplified-logging"
-version = "1.0.3"
+version = "1.0.4"
 description = "A lightweight Python logging wrapper that simplifies the use of Python's standard logging module"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -12,9 +12,6 @@ license = { text = "MIT" }
 authors = [
     { name = "krigjo25", email = "krigjo25@outlook.com" }
 ]
-
-[tool.setuptools]
-py-modules = ["std_log"]
 
 keywords = ["logging", "logger", "simple", "wrapper", "standard-logging"]
 classifiers = [
@@ -36,6 +33,9 @@ classifiers = [
 Homepage = "https://github.com/krigjo25/simplified-logger"
 Repository = "https://github.com/krigjo25/simplified-logger"
 Issues = "https://github.com/krigjo25/simplified-logger/issues"
+
+[tool.setuptools]
+py-modules = ["std_log"]
 
 [tool.black]
 line-length = 120
