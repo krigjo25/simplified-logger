@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Publish Release
 
 on:
   push:
@@ -6,15 +6,15 @@ on:
       - 'v*'
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python distro to PyPI and GitHub
+  build-n-release:
+    name: Build and Create GitHub Release
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: write
+      contents: write  # Dette gir GitHub lov til å lage en release
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -34,6 +34,3 @@ jobs:
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
