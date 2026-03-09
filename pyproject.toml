@@ -14,7 +14,6 @@ authors = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "lib"}
 py-modules = ["std_log"]
 
 keywords = ["logging", "logger", "simple", "wrapper", "standard-logging"]
