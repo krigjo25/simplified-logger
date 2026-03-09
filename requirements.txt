@@ -1,0 +1,4 @@
+build==1.4.0
+packaging==26.0
+pyproject_hooks==1.2.0
+-e git+https://github.com/krigjo25/simplified-logger.git@621e73aa4c83bbe8c146dc1f9d78c4dedb73806e#egg=simplified_logging
