@@ -62,8 +62,12 @@
 			"**/.git": true
 		},
 		"conventionalCommits.scopes": [
-        "Logger - Standard"
-    	],
+			"Logger - Standard",
+			"Toml",
+			"Config",
+			"Workspace",
+			"Workflow"
+		],
 		
 		// Git settings
 		"git.ignoreLimitWarning": true,
