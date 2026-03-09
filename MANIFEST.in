@@ -1,0 +1,3 @@
+include lib/std_log.pyi
+include LICENSE
+include README.md
