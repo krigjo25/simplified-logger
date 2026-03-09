@@ -13,16 +13,15 @@ A lightweight Python logging wrapper that simplifies the use of Python's standar
 Clone the repository or copy the `lib/standard-logger.py` file to your project:
 
 ```bash
-pip install simplified-logger
+pip install simplified-logging
 ```
 Or simply download the file and place it in your project directory.
 
 ## Usage
 
 ### Basic Example
-
 ```python
-from lib.standard_logger import Logger
+from standard_logger import Logger
 
 # Initialize the logger
 logger = Logger(name="app.log", dir="logs")
@@ -42,9 +41,8 @@ logger.critical("Critical system failure")
 ```
 
 ### Console-Only Logging
-
 ```python
-from lib.standard_logger import Logger
+from lib.standard_logging import Logger
 
 logger = Logger(name="console.log", dir="logs")
 logger.console_handler()
@@ -53,7 +51,6 @@ logger.info("This will only appear in the console")
 ```
 
 ### File-Only Logging
-
 ```python
 from lib.standard_logger import Logger
 
@@ -64,7 +61,6 @@ logger.info("This will only be written to .logs/app.log")
 ```
 
 ### Custom Log Directory
-
 ```python
 from lib.standard_logger import Logger
 
@@ -78,7 +74,6 @@ logger.file_handler()
 ### Logger Class
 
 #### `__init__(name: str, dir: str)`
-
 Initialize a new logger instance.
 
 - **name**: Name of the log file (e.g., "app.log")
@@ -120,12 +115,10 @@ Example output:
 ```
 
 ## Requirements
-
 - Python 3.7+
 - No external dependencies (uses standard library only)
 
 ## Project Structure
-
 ```
 simplified-logger/
 ├── README.md
