@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "simplified-logger"
+name = "simplified-logging"
 version = "0.0.0"
 description = "A lightweight Python logging wrapper that simplifies the use of Python's standard logging module"
 readme = "README.md"
