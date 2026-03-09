@@ -27,7 +27,7 @@ class Logger(object):
         self.is_file: bool = False
         self.is_console: bool = False
 
-    def setup_handler(self, handler: log.FileHandler | log.StreamHandler):                                              #type: ignore - FileHandler and StreamHandler are valid types, but pylance doesn't recognize them.
+    def setup_handler(self, handler: log.FileHandler | log.StreamHandler) -> None:                                              #type: ignore - FileHandler and StreamHandler are valid types, but pylance doesn't recognize them.
         """
             *   Setup the Log handler
             *   param handler:[log.FileHandler, log.StreamHandler]
@@ -51,7 +51,7 @@ class Logger(object):
         self.setup_handler(handler)                                                                                     #type: ignore - StreamHandler is a valid type, but pylance doesn't recognize it.
         self.log.info(f"{self.name} has been initialized.")
 
-    def file_handler(self):
+    def file_handler(self) -> None:
         """
             *   Add a file handler to the logger
         """
@@ -74,31 +74,31 @@ class Logger(object):
         self.setup_handler(handler)                                                                                     #type: ignore - FileHandler is a valid type, but pylance doesn't recognize it.
         self.log.info(f"{self.name} has been initialized.")
 
-    def info(self, message: str): 
+    def info(self, message: str) -> None: 
         level:int = 0
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.info(message)
 
-    def error(self, message: str):
+    def error(self, message: str) -> None:
         level:int = 3
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.error(message)
 
-    def warn(self, message: str):
+    def warn(self, message: str) -> None:
         level:int = 2
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.warning(message)
 
-    def debug(self, message: str):
+    def debug(self, message: str) -> None:
         level:int = 1
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.debug(message)
 
-    def critical(self, message: str):
+    def critical(self, message: str) -> None:
         level:int = 4
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
