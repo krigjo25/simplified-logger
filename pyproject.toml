@@ -37,9 +37,6 @@ Homepage = "https://github.com/krigjo25/simplified-logger"
 Repository = "https://github.com/krigjo25/simplified-logger"
 Issues = "https://github.com/krigjo25/simplified-logger/issues"
 
-[tool.setuptools]
-packages = ["lib"]
-
 [tool.black]
 line-length = 120
 target-version = ["py37", "py38", "py39", "py310", "py311", "py312"]
