@@ -3,16 +3,14 @@ name: Build and Publish
 on:
   push:
     tags:
-      - 'v*' # Kjører når du pusher en tag som starter med 'v', f.eks. v1.0.2
+      - 'v*'
 
 jobs:
   build-n-publish:
     name: Build and publish Python distro to PyPI and GitHub
     runs-on: ubuntu-latest
     permissions:
-      # Påkrevd for Trusted Publishing på PyPI
       id-token: write
-      # Påkrevd for å lage Release på GitHub
       contents: write
 
     steps:
@@ -33,7 +31,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: dist/*
-        generate_release_notes: true # Lager automatisk changelog basert på commits
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
