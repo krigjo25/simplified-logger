@@ -1,14 +1,17 @@
+from typing import Optional
+
+
 class Logger:
     """
         Standard Logger to handle application logging using logging module.
         @param name: str - Name of the logger, default is the class name
-        @param dir: str - Directory to save log files, default is '.log'
+        @param dir: Optional[str] - Directory to save log files, default is '.log'
 
         *   The logger supports both console and file handlers, which can be initialized separately.
         *   The logger provides methods for logging messages at different levels: info, error, warning, debug, and critical.
         *   The logger ensures that handlers are not initialized multiple times, and logs a warning if an attempt is made to reinitialize a handler.
     """
-    def __init__(self, name: str, dir: str) -> None: 
+    def __init__(self, name: str, dir: Optional[str]) -> None: 
         """
             *   This constructor sets up the logger with the specified name and
             directory for log files. It also initializes flags to track whether file

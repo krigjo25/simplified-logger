@@ -1,16 +1,16 @@
 #   Python Libraries
 from __future__ import annotations
-import os, logging as log
 
+import os, logging as log
+from typing import Optional, Dict
 
 class Logger(object):
-    def __init__(self, name:str, dir:str):
-        
+    def __init__(self, name: str, dir:Optional[str]) -> None:
 
-        self.name = name
-        self.dir: str = '.' + dir
-        self.log = log.getLogger(f"{self.name}")
-        self.dictionary = { 0: log.INFO, 1: log.DEBUG, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
+        self.name : str = name 
+        self.dir: Optional[str] = '.' + dir if dir else None
+        self.log: log.Logger = log.getLogger(f"{self.name}") if self.name else log.getLogger()
+        self.dictionary: Dict[int, int] = { 0: log.INFO, 1: log.DEBUG, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
 
         #   Initialize the Flags
         self.is_file: bool = False
@@ -32,30 +32,28 @@ class Logger(object):
             *   Add a console handler to the logger
         """
         if self.is_console:
-            self.log.warning(f"{self.name} - Console handler already initialized")
+            self.log.critical(f"{self.name} - Console handler already initialized")
             return
 
         handler = log.StreamHandler()
         self.is_console = True
         self.setup_handler(handler)                                                                                     #type: ignore - StreamHandler is a valid type, but pylance doesn't recognize it.
-        self.log.info(f"{self.name} has been initialized.")
 
     def file_handler(self) -> None:
         """
             *   Add a file handler to the logger
         """
 
-        if self.is_file:
-            self.log.warning(f"{self.name} - File handler already initialized")
-            return
+        try:
+            if self.is_file: raise ValueError(f"{self.name} - File handler already initialized")
+            if not self.dir: raise ValueError("Directory for log files must be specified.")
 
-            #   Initializing the handler
-
-        if self.dir:
-            os.makedirs(self.dir,exist_ok=True)
+            os.makedirs(self.dir, exist_ok=True)
             file_path = os.path.join(self.dir, self.name)
 
-        else: file_path = self.name
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
 
         handler = log.FileHandler(file_path)
         self.is_file = True
