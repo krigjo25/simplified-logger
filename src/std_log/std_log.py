@@ -4,24 +4,8 @@ import os, logging as log
 
 
 class Logger(object):
-    """
-        Standard Logger to handle application logging using logging module.
-        @param name: str - Name of the logger, default is the class name
-        @param dir: str - Directory to save log files, default is '.log'
-
-        *   The logger supports both console and file handlers, which can be initialized separately.
-        *   The logger provides methods for logging messages at different levels: info, error, warning, debug, and critical.
-        *   The logger ensures that handlers are not initialized multiple times, and logs a warning if an attempt is made to reinitialize a handler.
-    """
     def __init__(self, name:str, dir:str):
-        """
-            *   This constructor sets up the logger with the specified name and
-            directory for log files. It also initializes flags to track whether file
-            and console handlers have been set up.
-            *   param dir: str - default: '.log'
-            *   param name: str - default: Class name
-            
-        """
+        
 
         self.name = name
         self.dir: str = '.' + dir
@@ -80,55 +64,31 @@ class Logger(object):
         self.log.info(f"{self.name} has been initialized.")
 
     def info(self, message: str) -> None: 
-        """
-            This method logs an info message. It sets the log level to INFO before
-            logging the message.
-             *   param message: str - The message to log
-        """
+        
         level:int = 0
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.info(message)
 
     def error(self, message: str) -> None:
-        """
-            This method logs an error message. It sets the log level to ERROR before
-            logging the message.
-             *   param message: str - The message to log
-        """
         level:int = 3
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.error(message)
 
     def warn(self, message: str) -> None:
-        """
-            This method logs a warning message. It sets the log level to WARNING before
-            logging the message.
-             *   param message: str - The message to log
-        """
         level:int = 2
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.warning(message)
 
     def debug(self, message: str) -> None:
-        """
-            This method logs a debug message. It sets the log level to DEBUG before
-            logging the message.
-             *   param message: str - The message to log
-        """
         level:int = 1
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.debug(message)
 
     def critical(self, message: str) -> None:
-        """
-            This method logs a critical message. It sets the log level to CRITICAL before
-            logging the message.
-             *   param message: str - The message to log
-        """
         level:int = 4
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
