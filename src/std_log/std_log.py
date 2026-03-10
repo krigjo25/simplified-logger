@@ -5,9 +5,9 @@ import os, logging as log
 from typing import Optional, Dict
 
 class Logger(object):
-    def __init__(self, name: str, dir:Optional[str]) -> None:
+    def __init__(self, name: Optional[str] = None, dir:Optional[str] = None) -> None:
 
-        self.name : str = name 
+        self.name : str = name if name else self.__class__.__name__ 
         self.dir: Optional[str] = '.' + dir if dir else None
         self.log: log.Logger = log.getLogger(f"{self.name}") if self.name else log.getLogger()
         self.dictionary: Dict[int, int] = { 0: log.INFO, 1: log.DEBUG, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
