@@ -44,7 +44,7 @@ logger.critical("Critical system failure")
 ```python
 from std_log import Logger
 
-logger = Logger(name="console.log", dir="logs")
+logger = Logger()
 logger.console_handler()
 
 logger.info("This will only appear in the console")
@@ -75,11 +75,10 @@ logger.file_handler()
 from std_log import Logger
 
 class AppWatcher(Logger):
-    def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
+    def __init__(self, name: str, dir:Optional[str] = None):
         super().__init__(dir = dir or 'logs', name=f"{self.__class__.__name__} -- {name}.log")
 
 logger = AppWatcher(name="service.log", dir="logs")
-logger.console_handler()
 logger.file_handler()
 
 logger.info("Service started")

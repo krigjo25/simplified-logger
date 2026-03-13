@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplified_logging"
-version = "1.0.13.7"
+version = "1.0.14"
 description = "A lightweight Python logging wrapper that simplifies Python's standard logging module"
 readme = "README.md"
 requires-python = ">=3.10"
