@@ -22,7 +22,10 @@ classifiers = [
 	"Topic :: Software Development :: Libraries :: Python Modules",
 	"Topic :: System :: Logging",
 ]
-dependencies = []
+dependencies = [
+	"structlog",
+	"serilog-python",
+]
 
 [project.urls]
 Homepage = "https://github.com/krigjo25/simplified-logger"

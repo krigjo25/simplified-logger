@@ -1,3 +1,6 @@
-from .std_log import Logger
+from .std_log import StandardLogger, StructLogger, SeriLogger
 
-__all__ = ["Logger"]
+# Alias for backward compatibility
+Logger = StandardLogger
+
+__all__ = ["StandardLogger", "StructLogger", "SeriLogger", "Logger"]

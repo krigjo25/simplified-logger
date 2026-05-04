@@ -2,9 +2,14 @@
 from __future__ import annotations
 
 import os, logging as log
-from typing import Optional, Dict
+from typing import Optional, Any, Dict
 
-class Logger(object):
+
+# Third-Party Libraries
+import structlog
+from serilog_python import setup_logging
+
+class StandardLogger(object):
     def __init__(self, name: Optional[str] = None, dir:Optional[str] = None) -> None:
 
         self.name : str = name if name else self.__class__.__name__ 
@@ -91,3 +96,122 @@ class Logger(object):
         self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
         self.log.critical(message)
+
+class StructLogger:
+    def __init__(self, name: Optional[str] = None, dir: Optional[str] = None) -> None:
+        self.name: str = name if name else self.__class__.__name__
+        self.dir: Optional[str] = '.' + dir if dir else None
+        
+        # Configure structlog
+        structlog.configure(
+            processors=[
+                structlog.contextvars.merge_contextvars,
+                structlog.processors.add_log_level,
+                structlog.processors.StackInfoRenderer(),
+                structlog.processors.format_exc_info,
+                structlog.processors.TimeStamper(fmt="iso"),
+                structlog.processors.JSONRenderer()
+            ],
+            wrapper_class=structlog.make_filtering_bound_logger(20), # Default to INFO
+            context_class=dict,
+            logger_factory=structlog.PrintLoggerFactory(),
+            cache_logger_on_first_use=True,
+        )
+        self.log = structlog.get_logger(self.name)
+        self.is_file: bool = False
+        self.is_console: bool = False
+
+    def console_handler(self) -> None:
+        """
+        In structlog with PrintLoggerFactory, console is already the default destination.
+        This method is kept for interface consistency.
+        """
+        self.is_console = True
+
+    def file_handler(self) -> None:
+        """
+        Configure structlog to write to a file.
+        """
+        if self.is_file:
+            return
+        
+        if not self.dir:
+            return
+
+        os.makedirs(self.dir, exist_ok=True)
+        file_path = os.path.join(self.dir, self.name)
+        
+        # Redirect structlog to file
+        structlog.configure(
+            logger_factory=structlog.WriteLoggerFactory(file=open(file_path, "a", encoding="utf-8"))
+        )
+        self.is_file = True
+
+    def info(self, message: str, **kwargs: Any) -> None:
+        self.log.info(message, **kwargs)
+
+    def debug(self, message: str, **kwargs: Any) -> None:
+        self.log.debug(message, **kwargs)
+
+    def warn(self, message: str, **kwargs: Any) -> None:
+        self.log.warning(message, **kwargs)
+
+    def error(self, message: str, **kwargs: Any) -> None:
+        self.log.error(message, **kwargs)
+
+    def critical(self, message: str, **kwargs: Any) -> None:
+        self.log.critical(message, **kwargs)
+
+class SeriLogger:
+    def __init__(self, name: Optional[str] = None, dir: Optional[str] = None) -> None:
+        self.name: str = name if name else self.__class__.__name__
+        self.dir: Optional[str] = '.' + dir if dir else None
+        
+        # Initial setup (defaults to console)
+        setup_logging(application_name=self.name)
+        self.log = log.getLogger(self.name)
+        
+        self.is_file: bool = False
+        self.is_console: bool = True
+
+    def console_handler(self) -> None:
+        """
+        Console handler is active by default in serilog-python.
+        """
+        self.is_console = True
+
+    def file_handler(self) -> None:
+        """
+        Configure file logging. serilog-python typically outputs to stdout/stderr 
+        intended for container logs, but we can manually add a FileHandler.
+        """
+        if self.is_file:
+            return
+        
+        if not self.dir:
+            return
+
+        os.makedirs(self.dir, exist_ok=True)
+        file_path = os.path.join(self.dir, self.name)
+        
+        handler = log.FileHandler(file_path)
+        formatter = log.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.log.addHandler(handler)
+        
+        self.is_file = True
+
+    def info(self, message: str, **kwargs: Any) -> None:
+        self.log.info(message, extra=kwargs)
+
+    def debug(self, message: str, **kwargs: Any) -> None:
+        self.log.debug(message, extra=kwargs)
+
+    def warn(self, message: str, **kwargs: Any) -> None:
+        self.log.warning(message, extra=kwargs)
+
+    def error(self, message: str, **kwargs: Any) -> None:
+        self.log.error(message, extra=kwargs)
+
+    def critical(self, message: str, **kwargs: Any) -> None:
+        self.log.critical(message, extra=kwargs)
