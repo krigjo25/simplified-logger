@@ -12,19 +12,26 @@ Below is a visualization of how the components interact:
 
 ## Core Components
 
-### `Logger` Class
-The central component of the library is the `Logger` class, defined in `src/std_log/std_log.py`. It manages:
-- **Initialization:** Setting up a named logger instance.
-- **Handler Configuration:** Managing both console and file output.
-- **Level Mapping:** A dictionary-based mapping for simplified log levels.
+The library provides three distinct logger classes within `src/std_log/std_log.py`, each catering to different logging needs:
+
+### 1. `StandardLogger` (Alias: `Logger`)
+The classic wrapper around Python's standard `logging` module. It is zero-dependency and ideal for simple scripts and applications that need standard console and file output.
+
+### 2. `StructLogger`
+A wrapper around the `structlog` library. It is designed for structured logging, emitting logs in JSON format by default. This is ideal for modern cloud environments and log aggregation tools (e.g., ELK stack, Datadog).
+
+### 3. `SeriLogger`
+A wrapper around `serilog-python`, inspired by the popular .NET Serilog library. It supports structured logging with a focus on application-wide setup and compatibility with Serilog-based sinks.
 
 ## Key Mechanisms
 
 ### 1. Handler Management & Duplicate Prevention
-To prevent redundant logs, the `Logger` class uses boolean flags (`is_file`, `is_console`) to track if a handler has already been added. If a user attempts to call `console_handler()` or `file_handler()` multiple times, the class either logs a critical message or raises an error to ensure only one instance of each handler exists.
+Each logger class manages its own handlers. The `StandardLogger` uses boolean flags (`is_file`, `is_console`) to track initialization and prevent redundant handler attachment.
 
-### 2. Dynamic Log Levels
-Unlike traditional logging patterns where the level is set once globally, `simplified-logger` dynamically sets the logger's level just before emitting a message. For example, calling `logger.error("message")` sets the level to `ERROR` and then logs the message. This ensures the message is always captured regardless of the previous state, although it deviates from standard threshold-based logging.
+### 2. Back-end Specific Implementations
+- **Standard:** Dynamically sets log levels on each call for maximum flexibility.
+- **Structured:** Leverages `structlog` pipelines for high-performance JSON rendering.
+- **Serilog:** Uses `setup_logging` from `serilog-python` to configure a standardized structured output.
 
 ### 3. Automatic Directory Creation
 When a file handler is initialized, the library automatically creates the target log directory (prefixed with a dot, e.g., `.logs/`) using `os.makedirs(exist_ok=True)`.

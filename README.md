@@ -19,69 +19,37 @@ Or simply download the file and place it in your project directory.
 
 ## Usage
 
-### Basic Example
+### Standard Logging (Zero-Dependency)
+The `StandardLogger` (aliased as `Logger` for backward compatibility) uses Python's built-in `logging` module.
+
 ```python
-from std_log import Logger
+from std_log import StandardLogger
 
-# Initialize the logger
-logger = Logger(name="app.log", dir="logs")
-
-# Add console handler (outputs to terminal)
+logger = StandardLogger(name="app.log", dir="logs")
 logger.console_handler()
-
-# Add file handler (writes to file)
 logger.file_handler()
 
-# Log messages at different levels
-logger.info("Application started successfully")
-logger.debug("Debugging information")
-logger.warn("This is a warning message")
-logger.error("An error occurred")
-logger.critical("Critical system failure")
+logger.info("Application started")
 ```
 
-### Console-Only Logging
+### Structured Logging (JSON)
+The `StructLogger` uses `structlog` to output machine-readable JSON logs, perfect for cloud log aggregators.
+
 ```python
-from std_log import Logger
+from std_log import StructLogger
 
-logger = Logger()
-logger.console_handler()
-
-logger.info("This will only appear in the console")
+logger = StructLogger(name="app.json", dir="logs")
+logger.info("user_login", user_id=123, ip="1.2.3.4")
 ```
 
-### File-Only Logging
+### Serilog-Style Logging
+The `SeriLogger` uses `serilog-python` for a modern, structured logging experience inspired by .NET's Serilog.
+
 ```python
-from std_log import Logger
+from std_log import SeriLogger
 
-logger = Logger(name="app.log", dir="logs")
-logger.file_handler()
-
-logger.info("This will only be written to .logs/app.log")
-```
-
-### Custom Log Directory
-```python
-from std_log import Logger
-
-# Logs will be stored in .my-logs/application.log
-logger = Logger(name="application.log", dir="my-logs")
-logger.file_handler()
-```
-
-### Recommended Pattern
-```python
-
-from std_log import Logger
-
-class AppWatcher(Logger):
-    def __init__(self, name: str, dir:Optional[str] = None):
-        super().__init__(dir = dir or 'logs', name=f"{self.__class__.__name__} -- {name}.log")
-
-logger = AppWatcher(name="service.log", dir="logs")
-logger.file_handler()
-
-logger.info("Service started")
+logger = SeriLogger(name="serilog")
+logger.info("Process completed", duration_ms=450, status="success")
 ```
 
 ## API Reference
@@ -142,9 +110,11 @@ simplified-logger/
 ├── LICENCE
 ├── README.md
 ├── pyproject.toml
-└── std_log/
-    ├── __init__.py
-    └── standard-logger.py
+└── src/
+    └── std_log/
+        ├── __init__.py
+        ├── std_log.py
+        └── std_log.pyi
 ```
 
 ## License

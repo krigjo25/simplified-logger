@@ -1,4 +1,4 @@
 include LICENSE
 include README.md
-include lib/py.typed
-include lib/std_log.pyi
+recursive-include src/std_log *.pyi
+include src/std_log/py.typed

@@ -7,9 +7,16 @@
                 <mxCell id="2" value="Client Application" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
                     <mxGeometry x="100" y="50" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="Logger Wrapper (std_log.py)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="270" y="50" width="160" height="60" as="geometry"/>
+                <mxCell id="3" value="StandardLogger (std_log.py)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="270" y="50" width="160" height="40" as="geometry"/>
                 </mxCell>
+                <mxCell id="13" value="StructLogger (structured.py)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="270" y="100" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="SeriLogger (serilog.py)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="270" y="150" width="160" height="40" as="geometry"/>
+                </mxCell>
+
                 <mxCell id="4" value="Console Handler (StreamHandler)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D6B656;" parent="1" vertex="1">
                     <mxGeometry x="480" y="10" width="140" height="40" as="geometry"/>
                 </mxCell>
